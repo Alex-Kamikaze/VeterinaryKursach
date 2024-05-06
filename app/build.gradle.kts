@@ -80,5 +80,15 @@ dependencies {
     implementation("androidx.navigation:navigation-compose:2.7.7")
 
     implementation("androidx.datastore:datastore-preferences:1.1.0")
+
     implementation("androidx.hilt:hilt-navigation:1.2.0")
+    implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
+
+    implementation("io.github.jan-tennert.supabase:gotrue-kt:2.3.1")
+    implementation("io.github.jan-tennert.supabase:serializer-jackson:2.3.1")
+
+    implementation("io.ktor:ktor-client-cio:2.3.8")
+    implementation("io.ktor:ktor-client-android:2.3.8")
+    implementation("io.ktor:ktor-client-core:2.3.8")
+    implementation("io.ktor:ktor-utils:2.3.8")
 }

@@ -33,7 +33,7 @@ import androidx.compose.ui.unit.sp
 import tkuik.alexkarav.veterinary.R
 
 @Composable
-fun AuthScreen() {
+fun AuthScreen(onUiEvent: (AuthScreenUIEvents) -> Unit) {
     val loginInputState = remember { mutableStateOf("")}
     val passwordInputState = remember { mutableStateOf("") }
     val passwordVisibleState = remember { mutableStateOf(false) }
@@ -49,7 +49,7 @@ fun AuthScreen() {
         Text("Авторизуйтесь, чтобы получить доступ к своему аккаунту", modifier = Modifier.padding(top = 10.dp), fontSize = 15.sp)
         LoginInfoTextField(state = loginInputState, hint = "Ваш логин")
         PasswordTextField(textInputState = passwordInputState, passwordVisibleState = passwordVisibleState, hint = "Ваш пароль")
-        Button(onClick = {}, colors = ButtonDefaults.outlinedButtonColors(containerColor = MaterialTheme.colorScheme.onPrimaryContainer, contentColor = MaterialTheme.colorScheme.primaryContainer), modifier = Modifier
+        Button(onClick = { onUiEvent(AuthScreenUIEvents.OnAuthButtonPressed(loginInputState.value, passwordInputState.value)) }, colors = ButtonDefaults.outlinedButtonColors(containerColor = MaterialTheme.colorScheme.onPrimaryContainer, contentColor = MaterialTheme.colorScheme.primaryContainer), modifier = Modifier
             .fillMaxWidth()
             .padding(top = 20.dp), shape = RoundedCornerShape(8.dp), enabled = authButtonEnabled) {
             Text("Авторизоваться")
@@ -57,7 +57,7 @@ fun AuthScreen() {
         Text("У вас еще нет аккаунта?", modifier = Modifier
             .fillMaxWidth()
             .padding(top = 20.dp), textAlign = TextAlign.Center)
-        OutlinedButton(onClick = { /*TODO*/ }, colors = ButtonDefaults.outlinedButtonColors(contentColor = MaterialTheme.colorScheme.onSecondaryContainer), shape = RoundedCornerShape(8.dp), modifier = Modifier.fillMaxWidth()) {
+        OutlinedButton(onClick = { onUiEvent(AuthScreenUIEvents.OnRegisterButtonPressed ) }, colors = ButtonDefaults.outlinedButtonColors(contentColor = MaterialTheme.colorScheme.onSecondaryContainer), shape = RoundedCornerShape(8.dp), modifier = Modifier.fillMaxWidth()) {
             Text("Зарегистрироваться")
         }
     }
@@ -66,7 +66,7 @@ fun AuthScreen() {
 @Preview(showBackground = true)
 @Composable
 private fun AuthScreenPreview() {
-    AuthScreen()
+    AuthScreen {}
 }
 
 @Composable

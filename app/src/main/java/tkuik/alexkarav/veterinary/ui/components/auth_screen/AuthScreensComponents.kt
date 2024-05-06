@@ -70,14 +70,14 @@ private fun AuthScreenPreview() {
 }
 
 @Composable
-private fun LoginInfoTextField(state: MutableState<String>, hint: String) {
+fun LoginInfoTextField(state: MutableState<String>, hint: String) {
     OutlinedTextField(value = state.value, onValueChange = {state.value = it}, modifier = Modifier
         .fillMaxWidth()
         .padding(top = 10.dp), placeholder = { Text(hint, fontWeight = FontWeight.Light)}, shape = RoundedCornerShape(8.dp) )
 }
 
 @Composable
-private fun PasswordTextField(textInputState: MutableState<String>, passwordVisibleState: MutableState<Boolean>, hint: String) {
+fun PasswordTextField(textInputState: MutableState<String>, passwordVisibleState: MutableState<Boolean>, hint: String) {
     OutlinedTextField(
         value = textInputState.value,
         onValueChange = { textInputState.value = it },

@@ -1,5 +1,6 @@
 package tkuik.alexkarav.veterinary.ui.activities
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -8,7 +9,11 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Email
+import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -30,6 +35,7 @@ import tkuik.alexkarav.veterinary.ui.components.auth_screen.AuthScreen
 import tkuik.alexkarav.veterinary.ui.components.auth_screen.AuthScreenUIEvents
 import tkuik.alexkarav.veterinary.ui.components.intro_screen_components.IntroScreen
 import tkuik.alexkarav.veterinary.ui.components.intro_screen_components.IntroScreenModel
+import tkuik.alexkarav.veterinary.ui.components.registration_screen.AlertDialogImpl
 import tkuik.alexkarav.veterinary.ui.components.registration_screen.RegistrationScreen
 import tkuik.alexkarav.veterinary.ui.components.registration_screen.RegistrationScreenUIEvents
 import tkuik.alexkarav.veterinary.ui.theme.VeterinaryTheme
@@ -37,6 +43,7 @@ import tkuik.alexkarav.veterinary.ui.theme.VeterinaryTheme
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     private lateinit var mainViewModel: MainViewModel
+    @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         installSplashScreen().setKeepOnScreenCondition {
@@ -92,9 +99,23 @@ class MainActivity : ComponentActivity() {
                             val registrationState = registerViewModel.registrationState.collectAsState()
                             if(registrationState.value?.isSuccess == true) {
                                 //TODO: Заменить на открытие Gmail для подтверждения регистрации
-                                Toast.makeText(LocalContext.current, "Вы успешно зарегистрировались", Toast.LENGTH_SHORT).show()
-                                registerViewModel.clearState()
-                                navController.popBackStack()
+//                                Toast.makeText(LocalContext.current, "Вы успешно зарегистрировались", Toast.LENGTH_SHORT).show()
+//
+                                AlertDialogImpl(
+                                    onDismissRequest = {
+                                        registerViewModel.clearState()
+                                        navController.popBackStack()
+                                    },
+                                    onConfirmation = {
+                                          val gmailIntent = packageManager.getLaunchIntentForPackage("com.google.android.gm")
+                                          startActivity(gmailIntent)
+                                    },
+                                    dialogTitle = "Подтверждение регистрации",
+                                    dialogText = "Вам на почту выслано письмо для подтверждения регистрации, нажмите на кнопку 'Подтвердить ниже, чтобы перейти в Gmail'",
+                                    icon = Icons.Default.Email,
+                                    confirmButtonText = "Подтвердить",
+                                    dismissButtonText = "Позже"
+                                )
                             }
                             else if(registrationState.value?.isSuccess == false) {
                                 Toast.makeText(LocalContext.current, registrationState.value?.exceptionOrNull().toString(), Toast.LENGTH_SHORT).show()
@@ -107,7 +128,12 @@ class MainActivity : ComponentActivity() {
                         }
 
                         composable("main_page") {
+                            Scaffold(
+                                bottomBar = BottomAppBar {
 
+                                }
+                            ) {
+                            }
                         }
                     }
                 }

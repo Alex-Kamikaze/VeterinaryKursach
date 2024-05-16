@@ -11,4 +11,6 @@ interface VeterinaryAppRepository {
     suspend fun setIntroScreenCompletion(completed: Boolean)
 
     suspend fun registerUser(userData: UserRegistrationData): Result<Boolean>
+
+    fun getUsername(): Flow<String>
 }

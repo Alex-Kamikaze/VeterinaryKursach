@@ -2,11 +2,10 @@ package tkuik.alexkarav.veterinary.data
 
 import android.content.Context
 import androidx.datastore.core.DataStore
-import androidx.datastore.dataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.core.intPreferencesKey
+import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -26,8 +25,15 @@ class DataStoreManager(val context: Context) {
         }
     }
 
+    fun getUserName(): Flow<String> {
+        return context.dataStore.data.map { settings ->
+            settings[usernameKey] ?: ""
+        }
+    }
+
 
     companion object {
         val introCompletedKey = booleanPreferencesKey("INTRO_COMPLETED")
+        val usernameKey = stringPreferencesKey("USERNAME")
     }
 }

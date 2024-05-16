@@ -34,6 +34,7 @@ class RegistrationViewModel @Inject constructor(private val repository: Veterina
                 userPhone = userPhone)
             )
             _registrationState.value = result
+            clearState()
         }
     }
 

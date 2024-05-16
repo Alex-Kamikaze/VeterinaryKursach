@@ -49,4 +49,8 @@ class VeterinaryAppRepositoryImpl @Inject constructor(private val dataStoreManag
             Result.failure(e)
         }
     }
+
+    override fun getUsername(): Flow<String> {
+        return dataStoreManager.getUserName()
+    }
 }

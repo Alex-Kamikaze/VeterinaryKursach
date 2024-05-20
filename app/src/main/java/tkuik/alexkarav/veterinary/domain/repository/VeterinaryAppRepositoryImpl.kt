@@ -53,4 +53,15 @@ class VeterinaryAppRepositoryImpl @Inject constructor(private val dataStoreManag
     override fun getUsername(): Flow<String> {
         return dataStoreManager.getUserName()
     }
+
+    override suspend fun setUserAuthorizationInfo(
+        userEmail: String,
+        userPassword: String
+    ) {
+        dataStoreManager.saveUserInformationForAuthorization(userEmail, userPassword)
+    }
+
+    override suspend fun saveUsername(username: String) {
+        dataStoreManager.saveUsername(username)
+    }
 }

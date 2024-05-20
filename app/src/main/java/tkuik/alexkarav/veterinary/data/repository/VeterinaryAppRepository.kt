@@ -13,4 +13,8 @@ interface VeterinaryAppRepository {
     suspend fun registerUser(userData: UserRegistrationData): Result<Boolean>
 
     fun getUsername(): Flow<String>
+
+    suspend fun setUserAuthorizationInfo(userEmail: String, userPassword: String)
+
+    suspend fun saveUsername(username: String)
 }

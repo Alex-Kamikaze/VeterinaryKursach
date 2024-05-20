@@ -34,11 +34,14 @@ class RegistrationViewModel @Inject constructor(private val repository: Veterina
                 userPhone = userPhone)
             )
             _registrationState.value = result
-            clearState()
         }
     }
 
     fun clearState() {
         _registrationState.value = null
+    }
+
+    fun onRegistrationComplete() {
+        clearState()
     }
 }

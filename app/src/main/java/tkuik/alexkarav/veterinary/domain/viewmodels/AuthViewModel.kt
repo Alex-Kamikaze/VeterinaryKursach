@@ -23,6 +23,7 @@ class AuthViewModel @Inject constructor(private val repo: VeterinaryAppRepositor
                 viewModelScope.launch {
                     val result = repo.loginUser(uiEvent.login, uiEvent.password)
                     _authResult.value = result
+                    repo.setUserAuthorizationInfo(uiEvent.login, uiEvent.password)
                 }
             }
             is AuthScreenUIEvents.OnRegisterButtonPressed -> {}
@@ -30,4 +31,10 @@ class AuthViewModel @Inject constructor(private val repo: VeterinaryAppRepositor
     }
 
     fun clearAuthState() { _authResult.value = null }
+
+    fun saveUsernameInDataStore(username: String) {
+        viewModelScope.launch {
+            repo.saveUsername(username)
+        }
+    }
 }

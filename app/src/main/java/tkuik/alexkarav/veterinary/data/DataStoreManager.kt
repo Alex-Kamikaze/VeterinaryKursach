@@ -31,9 +31,24 @@ class DataStoreManager(val context: Context) {
         }
     }
 
+    suspend fun saveUserInformationForAuthorization(userEmail: String, userPassword: String) {
+        context.dataStore.edit { settings ->
+            settings[userEmailKey] = userEmail
+            settings[userPasswordKey] = userPassword
+        }
+    }
+
+    suspend fun saveUsername(username: String) {
+        context.dataStore.edit {
+            it[usernameKey] = username
+        }
+    }
+
 
     companion object {
         val introCompletedKey = booleanPreferencesKey("INTRO_COMPLETED")
         val usernameKey = stringPreferencesKey("USERNAME")
+        val userEmailKey = stringPreferencesKey("EMAIL")
+        val userPasswordKey = stringPreferencesKey("PASSWORD")
     }
 }
